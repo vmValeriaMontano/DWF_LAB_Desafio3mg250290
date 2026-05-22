@@ -1,5 +1,6 @@
 package sv.edu.udb.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sv.edu.udb.domain.Materia;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/materias")//endpoit principal
+@SecurityRequirement(name = "bearerAuth")
 public class MateriaController {
 
     //Inyección de dependencia del

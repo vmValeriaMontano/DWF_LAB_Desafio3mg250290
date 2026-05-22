@@ -4,7 +4,6 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 
-import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
 import org.springframework.context.annotation.Bean;
@@ -16,8 +15,6 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
 
-        final String securitySchemeName = "bearerAuth";
-
         return new OpenAPI()
 
                 .info(new Info()
@@ -26,16 +23,14 @@ public class OpenApiConfig {
                         .description("API REST con JWT y Swagger")
                 )
 
-                .addSecurityItem(
-                        new SecurityRequirement().addList(securitySchemeName)
-                )
-
+                // SOLO definimos el esquema JWT
+                // NO lo aplicamos globalmente
                 .components(
                         new Components()
                                 .addSecuritySchemes(
-                                        securitySchemeName,
+                                        "bearerAuth",
                                         new SecurityScheme()
-                                                .name(securitySchemeName)
+                                                .name("bearerAuth")
                                                 .type(SecurityScheme.Type.HTTP)
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")
