@@ -1,28 +1,35 @@
 package sv.edu.udb.domain;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-//tabla que nos servira para nuestro LOGIN
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     private String username;
 
     private String password;
 
-    private String rol;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String rol = "USER"; // POR DEFECTO
+
+    public Usuario() {
+    }
+
+    public Usuario(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.rol = "USER";
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

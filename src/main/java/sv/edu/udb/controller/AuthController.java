@@ -52,6 +52,7 @@ public class AuthController {
         usuario.setPassword(
                 passwordEncoder.encode(usuario.getPassword())
         );
+        usuario.setRol("USER"); //siempre USER
 
         return usuarioRepository.save(usuario);
     }
