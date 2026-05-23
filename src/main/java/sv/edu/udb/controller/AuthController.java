@@ -29,7 +29,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //LOGIN
+    // LOGIN
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 
@@ -40,19 +40,30 @@ public class AuthController {
                 )
         );
 
+        // 🔥 TRAER USUARIO DESDE BD
+        Usuario usuario = usuarioRepository
+                .findByUsername(request.getUsername())
+                .orElseThrow();
+
+        // 🔥 GENERAR TOKEN
         String token = jwtService.generateToken(request.getUsername());
 
-        return new AuthResponse(token);
+        // 🔥 DEVOLVER TOKEN + ROL
+        return new AuthResponse(
+                token,
+                usuario.getRol()
+        );
     }
 
-    //REGISTRO
+    // REGISTRO
     @PostMapping("/register")
     public Usuario register(@RequestBody Usuario usuario) {
 
         usuario.setPassword(
                 passwordEncoder.encode(usuario.getPassword())
         );
-        usuario.setRol("USER"); //siempre USER
+
+        usuario.setRol("USER"); // siempre USER
 
         return usuarioRepository.save(usuario);
     }

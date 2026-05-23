@@ -3,19 +3,18 @@ package sv.edu.udb.dto;
 public class AuthResponse {
 
     private String token;
+    private String rol;
 
-    public AuthResponse() {
-    }
-
-    public AuthResponse(String token) {
+    public AuthResponse(String token, String rol) {
         this.token = token;
+        this.rol = rol;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public String getRol() {
+        return rol;
     }
 }
